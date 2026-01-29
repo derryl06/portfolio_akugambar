@@ -270,21 +270,28 @@ p {
 
 .social-list {
   display: flex;
-  gap: 14px;
+  flex-direction: column;
+  gap: 12px;
   margin-top: 16px;
 }
 
 .social-list a {
-  width: 36px;
-  height: 36px;
-  border-radius: 999px;
+  padding: 10px 16px;
+  border-radius: 12px;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  gap: 12px;
   background: #f3f3f3;
   color: var(--text);
   text-decoration: none;
-  transition: transform 0.2s ease;
+  font-weight: 600;
+  font-size: 14px;
+  width: fit-content;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+body[data-theme="dark"] .social-list a {
+  background: #1a1a1a;
 }
 
 .social-list a:hover {
