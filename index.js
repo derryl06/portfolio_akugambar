@@ -125,10 +125,5 @@ loadLatestWorks();
 
 const incrementViews = async (id) => {
   if (!window.supabaseClient) return;
-  try {
-    const { error } = await window.supabaseClient.rpc("increment_view", { p_id: id });
-    if (error) console.warn("Failed to increment views:", error.message);
-  } catch (err) {
-    console.warn("Error calling increment_view:", err);
-  }
+  await window.supabaseClient.rpc("increment_view", { p_id: id });
 };
