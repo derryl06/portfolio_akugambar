@@ -186,3 +186,19 @@ const incrementViews = async (id) => {
   if (!window.supabaseClient) return;
   await window.supabaseClient.rpc("increment_view", { p_id: id });
 };
+
+// Back to Top
+const backToTop = document.getElementById("backToTop");
+if (backToTop) {
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 300) {
+      backToTop.classList.add("is-visible");
+    } else {
+      backToTop.classList.remove("is-visible");
+    }
+  });
+
+  backToTop.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+}

@@ -234,3 +234,20 @@ document.addEventListener("click", (e) => {
     item.classList.add("is-open");
   }
 });
+
+// Back to Top
+const backToTop = document.getElementById("backToTop");
+if (backToTop) {
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 300) {
+      backToTop.classList.add("is-visible");
+    } else {
+      backToTop.classList.remove("is-visible");
+    }
+  });
+
+  backToTop.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+}
+
