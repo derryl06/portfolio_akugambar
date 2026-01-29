@@ -70,7 +70,7 @@ body::after {
   position: fixed;
   width: 1000px;
   height: 500px;
-  background-image: url("assets/brush.png");
+  background-image: url("../assets/brush.png");
   background-size: cover;
   opacity: 0.55;
   filter: contrast(0.85);
