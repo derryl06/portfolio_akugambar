@@ -130,5 +130,89 @@ loadLatestWorks();
 
 const incrementViews = async (id) => {
   if (!window.supabaseClient) return;
-  await window.supabaseClient.rpc("increment_view", { p_id: id });
+  try {
+    await window.supabaseClient.rpc("increment_view", { p_id: id });
+  } catch (e) { }
 };
+
+const testimonialContainer = document.getElementById("testimonial-container");
+const testimonialForm = document.getElementById("testimonial-form");
+const testimonialStatus = document.getElementById("testi-status");
+
+const loadTestimonials = async () => {
+  if (!window.supabaseClient || !testimonialContainer) return;
+
+  const { data, error } = await window.supabaseClient
+    .from("testimonials")
+    .select("*")
+    .eq("is_approved", true)
+    .order("created_at", { ascending: false })
+    .limit(6);
+
+  if (error || !data || data.length === 0) {
+    // If no data or error, show dummy data
+    const dummy = [
+      { name: "Andi Wijaya", role: "Owner Coffee Shop", content: "Hasil desainnya sangat memuaskan dan minimalis sesuai dengan keinginan saya. Proses pengerjaannya juga sangat profesional." },
+      { name: "Sari Pertiwi", role: "Fashion Blogger", content: "Logo yang dibuat benar-benar mewakili karakter brand saya. Komunikasi selama proses desain sangat lancar." },
+      { name: "Budi Santoso", role: "Startup Founder", content: "Cepat, rapi, dan hasilnya sangat estetik. Sangat direkomendasikan untuk yang mencari desain dengan sentuhan modern." }
+    ];
+    renderTestimonials(dummy);
+    return;
+  }
+
+  renderTestimonials(data);
+};
+
+const renderTestimonials = (list) => {
+  testimonialContainer.innerHTML = "";
+  list.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "testimonial-card";
+    card.innerHTML = `
+      <p class="testimonial-text">"${item.content}"</p>
+      <div class="testimonial-author">
+        <div class="author-info">
+          <strong>${item.name}</strong>
+          <span>${item.role || "-"}</span>
+        </div>
+      </div>
+    `;
+    testimonialContainer.appendChild(card);
+  });
+};
+
+if (testimonialForm) {
+  testimonialForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!window.supabaseClient) {
+      testimonialStatus.textContent = "Supabase tidak terhubung.";
+      testimonialStatus.classList.add("is-error");
+      return;
+    }
+
+    const submitBtn = document.getElementById("testi-submit");
+    const name = document.getElementById("testi-name").value.trim();
+    const role = document.getElementById("testi-role").value.trim();
+    const content = document.getElementById("testi-content").value.trim();
+
+    submitBtn.disabled = true;
+    testimonialStatus.textContent = "Mengirim...";
+    testimonialStatus.classList.remove("is-error");
+
+    const { error } = await window.supabaseClient
+      .from("testimonials")
+      .insert([{ name, role, content, is_approved: true }]); // Langsung approved agar pengunjung senang
+
+    if (error) {
+      testimonialStatus.textContent = "Gagal mengirim: " + error.message;
+      testimonialStatus.classList.add("is-error");
+    } else {
+      testimonialStatus.textContent = "Terima kasih! Testimoni Anda telah ditambahkan.";
+      testimonialForm.reset();
+      loadTestimonials(); // Refresh
+    }
+    submitBtn.disabled = false;
+  });
+}
+
+loadTestimonials();

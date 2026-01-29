@@ -157,43 +157,32 @@
             <div class="headline">Apa Kata Mereka</div>
           </div>
         </div>
-        <div class="testimonial-grid">
-          <div class="testimonial-card">
-            <p class="testimonial-text">
-              "Hasil desainnya sangat memuaskan dan minimalis sesuai dengan keinginan saya. Proses pengerjaannya juga
-              sangat profesional."
-            </p>
-            <div class="testimonial-author">
-              <div class="author-info">
-                <strong>Andi Wijaya</strong>
-                <span>Owner Coffee Shop</span>
+        <div class="testimonial-grid" id="testimonial-container">
+          <!-- Dynamic testimonials will load here -->
+          <div class="muted">Memuat testimoni...</div>
+        </div>
+
+        <div class="testimonial-form-card">
+          <div class="headline">Berikan Testimoni Anda</div>
+          <p class="muted">Ceritakan pengalaman Anda bekerja sama dengan kami.</p>
+          <form id="testimonial-form" class="testimonial-form">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div>
+                <label for="testi-name">Nama Lengkap</label>
+                <input type="text" id="testi-name" placeholder="Contoh: Andi Wijaya" required />
+              </div>
+              <div>
+                <label for="testi-role">Pekerjaan / Perusahaan (Opsional)</label>
+                <input type="text" id="testi-role" placeholder="Contoh: Owner Coffee Shop" />
               </div>
             </div>
-          </div>
-          <div class="testimonial-card">
-            <p class="testimonial-text">
-              "Logo yang dibuat benar-benar mewakili karakter brand saya. Komunikasi selama proses desain sangat
-              lancar."
-            </p>
-            <div class="testimonial-author">
-              <div class="author-info">
-                <strong>Sari Pertiwi</strong>
-                <span>Fashion Blogger</span>
-              </div>
+            <div>
+              <label for="testi-content">Pesan Testimoni</label>
+              <textarea id="testi-content" rows="3" placeholder="Tuliskan pengalaman Anda..." required></textarea>
             </div>
-          </div>
-          <div class="testimonial-card">
-            <p class="testimonial-text">
-              "Cepat, rapi, dan hasilnya sangat estetik. Sangat direkomendasikan untuk yang mencari desain dengan
-              sentuhan modern."
-            </p>
-            <div class="testimonial-author">
-              <div class="author-info">
-                <strong>Budi Santoso</strong>
-                <span>Startup Founder</span>
-              </div>
-            </div>
-          </div>
+            <button type="submit" class="btn" id="testi-submit">Kirim Testimoni</button>
+            <div id="testi-status" class="form-status"></div>
+          </form>
         </div>
       </div>
     </section>

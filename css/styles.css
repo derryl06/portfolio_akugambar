@@ -863,6 +863,30 @@ footer {
   color: var(--muted);
 }
 
+/* Testimonial Form */
+.testimonial-form-card {
+  background: var(--card);
+  padding: 32px;
+  border-radius: 20px;
+  border: 1px dashed var(--line);
+  margin-top: 40px;
+}
+
+.testimonial-form-card .headline {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.testimonial-form {
+  display: grid;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.testimonial-form .btn {
+  justify-self: start;
+}
+
 /* Desktop layout tweaks */
 @media (min-width: 900px) {
   .two-col {
