@@ -270,32 +270,46 @@ p {
 
 .social-list {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 10px;
   margin-top: 16px;
 }
 
 .social-list a {
-  padding: 10px 16px;
+  padding: 8px 14px;
   border-radius: 12px;
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  background: #f3f3f3;
+  gap: 8px;
+  background: var(--card);
+  border: 1px solid var(--line);
   color: var(--text);
   text-decoration: none;
   font-weight: 600;
-  font-size: 14px;
-  width: fit-content;
-  transition: transform 0.2s ease, background 0.2s ease;
+  font-size: 13px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
 }
 
-body[data-theme="dark"] .social-list a {
-  background: #1a1a1a;
+.social-list a svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.2s ease;
 }
 
 .social-list a:hover {
   transform: translateY(-2px);
+  border-color: var(--text);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+body[data-theme="dark"] .social-list a {
+  background: #1a1a1a;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+body[data-theme="dark"] .social-list a:hover {
+  background: #252525;
 }
 
 .card-grid {
