@@ -621,10 +621,21 @@ body[data-theme="dark"] select {
   border: 1px solid var(--text);
   background: var(--text);
   color: var(--bg);
-  padding: 10px 16px;
+  padding: 10px 24px;
   border-radius: 999px;
   font-weight: 700;
   cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  filter: brightness(1.1);
 }
 
 .btn-outline {
@@ -632,10 +643,20 @@ body[data-theme="dark"] select {
   color: var(--text);
 }
 
+.btn-outline:hover {
+  background: var(--text);
+  color: var(--bg);
+}
+
 .btn-danger {
   border-color: #e15b5b;
   color: #e15b5b;
   background: transparent;
+}
+
+.btn-danger:hover {
+  background: #e15b5b;
+  color: #fff;
 }
 
 .dropzone {
