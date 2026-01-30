@@ -17,9 +17,10 @@ const testiListAdmin = document.getElementById("testi-list-admin");
 const testiStatusAdmin = document.getElementById("testi-status-admin");
 
 const BUCKET_NAME = "portfolio";
-const MAX_FILE_SIZE = 5 * 1024 * 1024;
+const MAX_UPLOAD_SIZE = 10 * 1024 * 1024; // Batas upload awal (10MB)
+const COMPRESSION_TARGET = 500 * 1024; // Target kompresi (500KB)
 const MAX_IMAGES = 5;
-const MAX_DIMENSION = 1920;
+const MAX_DIMENSION = 1600; // Dikurangi sedikit untuk membantu kompresi
 let selectedFiles = [];
 let editingItem = null;
 
@@ -292,15 +293,20 @@ itemForm.addEventListener("submit", async (event) => {
     const uploadedPaths = [];
 
     for (const file of imageFileList) {
+      if (file.size > MAX_UPLOAD_SIZE) {
+        showStatus(itemStatus, "File terlalu besar. Maksimal 10MB.", true);
+        return;
+      }
+
       const compressed = await compressImage(file);
       if (!compressed) {
         showStatus(itemStatus, "Gagal compress gambar.", true);
         return;
       }
 
-      if (compressed.size > MAX_FILE_SIZE) {
-        showStatus(itemStatus, "Ukuran gambar maksimal 400KB.", true);
-        return;
+      // Check final size after compression attempt
+      if (compressed.size > COMPRESSION_TARGET * 1.5) { // Toleransi 50% jika memang susah dikompres lagi
+        console.warn("Gambar masih cukup besar setelah kompresi:", compressed.size);
       }
 
       const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.jpg`;
@@ -441,7 +447,8 @@ const compressImage = (file) =>
             resolve(null);
             return;
           }
-          if (blob.size <= MAX_FILE_SIZE || quality <= 0.5) {
+          // Jika sudah di bawah target atau kualitas sudah terlalu rendah (0.1)
+          if (blob.size <= COMPRESSION_TARGET || quality <= 0.1) {
             resolve(blob);
             return;
           }
@@ -449,7 +456,7 @@ const compressImage = (file) =>
         }, "image/jpeg", quality);
       };
 
-      tryQuality(0.9);
+      tryQuality(0.8);
       URL.revokeObjectURL(url);
     };
 
