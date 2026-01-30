@@ -141,7 +141,8 @@ const loadPortfolio = async () => {
     .from("portfolio_items")
     .select("id, title, category, description, image_url, image_urls, sort_order, created_at")
     .order("sort_order", { ascending: true })
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .limit(9);
 
   if (error) {
     console.warn("Gagal mengambil data portofolio:", error.message);

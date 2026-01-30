@@ -321,7 +321,19 @@ body[data-theme="dark"] .social-list a:hover {
 .card-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  gap: 16px;
+}
+
+@media (max-width: 992px) {
+  .card-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .card-row {
+    grid-template-columns: 1fr;
+  }
 }
 
 .card {
@@ -467,7 +479,19 @@ body[data-theme="dark"] .menu-item:hover {
 .portfolio-grid {
   display: grid;
   gap: 18px;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 992px) {
+  .portfolio-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .portfolio-card {
@@ -1088,6 +1112,7 @@ body[data-theme="dark"] .faq-question:hover {
   transform: translateY(-5px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 }
+
 /* Reveal on scroll animations */
 .reveal {
   opacity: 0;
@@ -1102,20 +1127,37 @@ body[data-theme="dark"] .faq-question:hover {
 }
 
 /* Stagger delay for children if needed */
-.reveal-stagger > * {
+.reveal-stagger>* {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-.reveal-stagger.active > * {
+.reveal-stagger.active>* {
   opacity: 1;
   transform: translateY(0);
 }
 
-.reveal-stagger.active > *:nth-child(1) { transition-delay: 0.1s; }
-.reveal-stagger.active > *:nth-child(2) { transition-delay: 0.2s; }
-.reveal-stagger.active > *:nth-child(3) { transition-delay: 0.3s; }
-.reveal-stagger.active > *:nth-child(4) { transition-delay: 0.4s; }
-.reveal-stagger.active > *:nth-child(5) { transition-delay: 0.5s; }
-.reveal-stagger.active > *:nth-child(6) { transition-delay: 0.6s; }
+.reveal-stagger.active>*:nth-child(1) {
+  transition-delay: 0.1s;
+}
+
+.reveal-stagger.active>*:nth-child(2) {
+  transition-delay: 0.2s;
+}
+
+.reveal-stagger.active>*:nth-child(3) {
+  transition-delay: 0.3s;
+}
+
+.reveal-stagger.active>*:nth-child(4) {
+  transition-delay: 0.4s;
+}
+
+.reveal-stagger.active>*:nth-child(5) {
+  transition-delay: 0.5s;
+}
+
+.reveal-stagger.active>*:nth-child(6) {
+  transition-delay: 0.6s;
+}

@@ -88,42 +88,54 @@ if (cardGrid) {
 }
 
 const loadLatestWorks = async () => {
-  const cards = Array.from(document.querySelectorAll(".work-card"));
-  if (!cards.length || !window.supabaseClient || !window.isSupabaseConfigured) return;
+  const container = document.querySelector(".card-grid");
+  if (!container || !window.supabaseClient || !window.isSupabaseConfigured) return;
 
   const { data, error } = await window.supabaseClient
     .from("portfolio_items")
     .select("id, title, image_url, image_urls, sort_order, created_at")
     .order("sort_order", { ascending: true })
     .order("created_at", { ascending: false })
-    .limit(cards.length);
+    .limit(9);
 
   if (error) {
     console.warn("Gagal mengambil data portofolio:", error.message);
     return;
   }
 
-  cards.forEach((card, index) => {
-    const item = data[index];
-    if (!item) {
-      card.classList.add("is-hidden");
-      return;
-    }
-    const img = card.querySelector("img");
+  // Clear container and rebuild to handle exact count (3x3 grid)
+  container.innerHTML = "";
+  const cardRow = document.createElement("div");
+  cardRow.className = "card-row reveal-stagger";
+  cardRow.style.display = "grid";
+  cardRow.style.gridTemplateColumns = "repeat(3, 1fr)";
+  cardRow.style.gap = "16px";
+
+  data.forEach((item, index) => {
     const images = Array.isArray(item.image_urls) && item.image_urls.length
       ? item.image_urls
-      : [item.image_url || img.getAttribute("src")];
+      : [item.image_url];
     const src = images[0];
-    img.src = src;
-    img.alt = item.title || `Karya ${index + 1}`;
-    img.loading = "lazy";
-    img.classList.add("lazy");
-    img.addEventListener("load", () => img.classList.add("is-loaded"), { once: true });
+
+    const card = document.createElement("div");
+    card.className = "card work-card";
     card.setAttribute("data-full", src);
     card.setAttribute("data-images", JSON.stringify(images));
     card.setAttribute("data-id", item.id);
-    card.classList.remove("is-hidden");
+    card.style.minHeight = "200px";
+
+    const img = document.createElement("img");
+    img.className = "card-thumb";
+    img.src = src;
+    img.alt = item.title || `Karya ${index + 1}`;
+    img.loading = "lazy";
+
+    card.appendChild(img);
+    cardRow.appendChild(card);
   });
+
+  container.appendChild(cardRow);
+  initReveal(); // Re-trigger reveal for new elements
 };
 
 loadLatestWorks();
