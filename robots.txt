@@ -1,5 +1,3 @@
 User-agent: *
 Allow: /
-Disallow: /admin.html
-
 Sitemap: https://derryl06.github.io/portfolio_akugambar/sitemap.xml
