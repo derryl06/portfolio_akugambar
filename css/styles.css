@@ -1008,25 +1008,51 @@ footer {
 
 .lightbox-info {
   text-align: center;
-  max-width: min(92vw, 900px);
+  max-width: min(92vw, 700px);
   color: #fff;
-  animation: fadeIn 0.3s ease forwards;
+  animation: lightboxFadeIn 0.4s ease forwards;
+  margin-top: 10px;
 }
 
 .lightbox-title {
-  font-size: clamp(18px, 3vw, 24px);
+  font-size: clamp(20px, 4vw, 28px);
   font-weight: 800;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
 }
 
 .lightbox-desc {
-  font-size: clamp(13px, 2vw, 15px);
-  opacity: 0.85;
-  line-height: 1.5;
+  font-size: clamp(14px, 2.2vw, 16px);
+  opacity: 0.9;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  margin-top: 4px;
+}
+
+@keyframes lightboxFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 body[data-theme="light"] .lightbox-info {
   color: #111;
+}
+
+body.lightbox-active {
+  overflow: hidden;
+}
+
+body.lightbox-active .social-sidebar {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
 }
 
 .lightbox-close {

@@ -4,7 +4,7 @@ const lightboxImg = document.querySelector(".lightbox-img");
 const lightboxClose = document.querySelector(".lightbox-close");
 const lightboxPrev = document.querySelector(".lightbox-nav.prev");
 const lightboxNext = document.querySelector(".lightbox-nav.next");
-const cardGrid = document.querySelector(".card-grid");
+const cardGrid = document.getElementById("latest-works-grid");
 let lightboxImages = [];
 let lightboxIndex = 0;
 
@@ -27,6 +27,7 @@ const closeLightbox = () => {
   lightbox.classList.remove("is-open");
   lightbox.setAttribute("aria-hidden", "true");
   lightboxImg.src = "";
+  document.body.classList.remove("lightbox-active");
 };
 
 if (lightboxClose) lightboxClose.addEventListener("click", closeLightbox);
@@ -54,7 +55,11 @@ const openLightbox = (images, index = 0, title = "", desc = "") => {
   showLightboxImage();
   lightbox.classList.add("is-open");
   lightbox.setAttribute("aria-hidden", "false");
+  document.body.classList.add("lightbox-active");
 };
+
+window.openLightbox = openLightbox;
+window.closeLightbox = closeLightbox;
 
 if (lightboxPrev) {
   lightboxPrev.addEventListener("click", () => {
@@ -98,8 +103,7 @@ if (cardGrid) {
 }
 
 const loadLatestWorks = async () => {
-  const container = document.querySelector(".card-grid");
-  if (!container || !window.supabaseClient || !window.isSupabaseConfigured) return;
+  if (!cardGrid || !window.supabaseClient || !window.isSupabaseConfigured) return;
 
   const { data, error } = await window.supabaseClient
     .from("portfolio_items")
@@ -115,7 +119,7 @@ const loadLatestWorks = async () => {
   }
 
   // Clear container and rebuild to handle exact count (3x3 grid)
-  container.innerHTML = "";
+  cardGrid.innerHTML = "";
   const cardRow = document.createElement("div");
   cardRow.className = "card-row reveal-stagger";
   cardRow.style.display = "grid";
@@ -147,8 +151,8 @@ const loadLatestWorks = async () => {
     cardRow.appendChild(card);
   });
 
-  container.appendChild(cardRow);
-  initReveal(); // Re-trigger reveal for new elements
+  cardGrid.appendChild(cardRow);
+  if (window.initReveal) window.initReveal(); // Re-trigger reveal for new elements
 };
 
 loadLatestWorks();
@@ -279,6 +283,8 @@ const initReveal = () => {
   const reveals = document.querySelectorAll(".reveal, .reveal-stagger");
   reveals.forEach(el => revealObserver.observe(el));
 };
+
+window.initReveal = initReveal;
 
 // Also handle dynamic content (like testimonials or portfolio items)
 const observeMutation = new MutationObserver(() => {
