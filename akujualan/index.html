@@ -345,41 +345,106 @@
             }
         }
 
-        /* Hero Enhanced Styles */
-        .hero-title-group {
-            margin-bottom: 48px;
+        /* Global Transitions */
+        * {
+            transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .hero-headline {
-            font-size: clamp(40px, 8vw, 72px);
-            font-weight: 800;
-            line-height: 1.1;
-            margin: 16px 0;
+        /* Header Improvements */
+        header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 32px 0;
+            background: transparent;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+        }
+
+        .nav-link {
+            text-decoration: none;
             color: var(--text);
-            letter-spacing: -2px;
+            font-weight: 600;
+            font-size: 14px;
+            position: relative;
+            padding: 4px 0;
         }
 
-        .hero-image-wrapper {
-            position: relative;
-            max-width: 900px;
-            margin: 0 auto;
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Responsive Fixes */
+        .hero {
+            padding-top: 160px;
+            padding-bottom: 80px;
+        }
+
+        @media (max-width: 600px) {
+            .hero {
+                padding-top: 120px;
+                padding-bottom: 60px;
+            }
+
+            .hero-headline {
+                font-size: 40px !important;
+                letter-spacing: -1px;
+            }
+        }
+
+        /* About Section Fix */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 64px;
+            align-items: center;
         }
 
         @media (max-width: 900px) {
-            .hero-headline {
-                font-size: 48px;
+            .two-col {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+
+        /* Footer Responsive */
+        @media (max-width: 768px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .footer-socials {
+                justify-content: flex-start;
             }
         }
     </style>
 </head>
 
 <body>
-    <header>
+    <header id="mainHeader">
         <div class="container header-inner">
             <div class="brand">akujualan.co</div>
             <nav style="display: flex; gap: 24px; align-items: center;">
-                <a href="../index.html"
-                    style="text-decoration: none; color: var(--text); font-weight: 600; font-size: 14px;">akugambar.co</a>
+                <a href="../index.html" class="nav-link">akugambar.co</a>
                 <button class="theme-toggle" type="button" aria-label="Toggle mode malam/siang" aria-pressed="false"
                     style="display: none;">
                     <span class="sr-only">Toggle mode malam/siang</span>
@@ -699,8 +764,8 @@
                 const { clientX, clientY } = e;
                 const centerX = window.innerWidth / 2;
                 const centerY = window.innerHeight / 2;
-                const moveX = (clientX - centerX) / 60;
-                const moveY = (clientY - centerY) / 60;
+                const moveX = (clientX - centerX) / 80;
+                const moveY = (clientY - centerY) / 80;
                 heroImg.style.transform = `translate3d(${moveX}px, ${moveY}px, 0)`;
             });
         }
