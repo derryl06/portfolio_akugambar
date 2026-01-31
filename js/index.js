@@ -289,9 +289,16 @@ const revealObserver = new IntersectionObserver((entries) => {
   rootMargin: "0px 0px -50px 0px"
 });
 
+const observedElements = new WeakSet();
+
 const initReveal = () => {
   const reveals = document.querySelectorAll(".reveal, .reveal-stagger");
-  reveals.forEach(el => revealObserver.observe(el));
+  reveals.forEach(el => {
+    if (!observedElements.has(el)) {
+      revealObserver.observe(el);
+      observedElements.add(el);
+    }
+  });
 };
 
 window.initReveal = initReveal;
@@ -306,18 +313,29 @@ if (mainElement) {
   observeMutation.observe(mainElement, { childList: true, subtree: true });
 }
 
-// Hero Parallax Effect
+// Hero Parallax Effect with requestAnimationFrame for performance
 const heroImage = document.querySelector(".hero-image");
 if (heroImage) {
+  let ticking = false;
+  let mouseX = 0;
+  let mouseY = 0;
+
   window.addEventListener("mousemove", (e) => {
-    const { clientX, clientY } = e;
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
+    mouseX = e.clientX;
+    mouseY = e.clientY;
 
-    const moveX = (clientX - centerX) / 50;
-    const moveY = (clientY - centerY) / 50;
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        const moveX = (mouseX - centerX) / 50;
+        const moveY = (mouseY - centerY) / 50;
 
-    heroImage.style.transform = `translate3d(${moveX}px, ${moveY}px, 0)`;
+        heroImage.style.transform = `translate3d(${moveX}px, ${moveY}px, 0)`;
+        ticking = false;
+      });
+      ticking = true;
+    }
   });
 }
 
