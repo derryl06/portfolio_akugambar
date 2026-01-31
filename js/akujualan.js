@@ -55,7 +55,15 @@ const loadAkujualanPortfolio = async () => {
 
         card.addEventListener("click", () => {
             const images = JSON.parse(card.getAttribute("data-images"));
-            if (window.openLightbox) window.openLightbox(images, 0, item.title, item.description);
+            const title = item.title || "";
+            const desc = item.description || "";
+
+            // Check if global openLightbox exists
+            if (window.openLightbox) {
+                window.openLightbox(images, 0, title, desc);
+            } else {
+                console.warn("Lightbox function not found");
+            }
         });
 
         gridDiv.appendChild(card);
