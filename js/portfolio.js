@@ -149,10 +149,11 @@ const loadPortfolio = async () => {
     return;
   }
 
-  // Mengambil semua karya tanpa limit agar kategori lain bisa tampil lengkap
+  // Mengambil karya khusus brand 'akugambar'
   const { data, error } = await window.supabaseClient
     .from("portfolio_items")
     .select("id, title, category, description, image_url, image_urls, sort_order, created_at")
+    .eq("brand", "akugambar")
     .order("sort_order", { ascending: true })
     .order("created_at", { ascending: false });
 

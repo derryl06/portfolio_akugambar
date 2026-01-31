@@ -108,17 +108,38 @@ const loadAkujualanPortfolio = async () => {
             else c.classList.remove("is-active");
         });
 
+        let allCounter = 0;
+
         // Filter cards
         cards.forEach(card => {
-            if (filter === "all" || card.dataset.category === filter) {
+            let visible = false;
+
+            if (filter === "all") {
+                // Limit to 9 items for "all" view
+                if (allCounter < 9) {
+                    visible = true;
+                    allCounter++;
+                }
+            } else {
+                // Show matches for specific categories
+                if (card.dataset.category === filter) {
+                    visible = true;
+                }
+            }
+
+            if (visible) {
                 card.style.display = "block";
-                card.style.opacity = "0";
-                setTimeout(() => {
-                    card.style.opacity = "1";
-                    card.style.transition = "opacity 0.4s ease";
-                }, 10);
+                // Only animate if it was hidden or we want to refresh
+                if (card.style.opacity !== "1") {
+                    card.style.opacity = "0";
+                    setTimeout(() => {
+                        card.style.opacity = "1";
+                        card.style.transition = "opacity 0.4s ease";
+                    }, 10);
+                }
             } else {
                 card.style.display = "none";
+                card.style.opacity = "0";
             }
         });
     };
