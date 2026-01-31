@@ -124,8 +124,9 @@
     <section class="hero reveal" style="padding-top: 120px; overflow: hidden;">
       <div class="container" style="text-align: center;">
         <div class="hero-title-group">
-          <div class="kicker" style="opacity: 0.8; letter-spacing: 2px;">DIBUAT PERLAHAN, DIPAKAI SELAMANYA
-          </div>
+          <div class="kicker" style="opacity: 0.8; letter-spacing: 2px;">DIBUAT PERLAHAN, DIPAKAI SELAMANYA</div>
+          <!-- Slot Indicator Placeholder -->
+          <div id="slot-indicator" style="margin-top: 16px;"></div>
         </div>
 
         <div class="hero-image-wrapper">
@@ -307,6 +308,50 @@
         <div id="akujualan-bundling" class="card-grid"
           style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); padding-bottom: 60px;">
           <div class="muted" style="grid-column: 1/-1; text-align: center;">Memuat paket hemat...</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <div class="kicker">Testimoni</div>
+            <div class="headline">Apa Kata Pelanggan</div>
+          </div>
+        </div>
+        <div class="testimonial-grid reveal-stagger" id="testimonial-container">
+          <!-- Dynamic testimonials will load here -->
+          <div class="muted">Memuat testimoni...</div>
+        </div>
+
+        <div class="testimonial-form-card reveal"
+          style="margin-top: 60px; background: rgba(166, 139, 124, 0.05); padding: 40px; border-radius: 24px;">
+          <div class="headline" style="font-size: 24px;">Berikan Testimoni Anda</div>
+          <p class="muted">Ceritakan kebahagiaan Anda setelah menerima hasil rajutan kami.</p>
+          <form id="testimonial-form" class="testimonial-form" style="margin-top: 24px; display: grid; gap: 20px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <label for="testi-name" style="font-size: 14px; font-weight: 600;">Nama Lengkap</label>
+                <input type="text" id="testi-name" placeholder="Contoh: Rina Kusuma" required
+                  style="padding: 12px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg);" />
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <label for="testi-role" style="font-size: 14px; font-weight: 600;">Pekerjaan / Domisili
+                  (Opsional)</label>
+                <input type="text" id="testi-role" placeholder="Contoh: Ibu Rumah Tangga"
+                  style="padding: 12px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg);" />
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <label for="testi-content" style="font-size: 14px; font-weight: 600;">Pesan Testimoni</label>
+              <textarea id="testi-content" rows="3" placeholder="Tuliskan pengalaman Anda..." required
+                style="padding: 12px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); resize: vertical;"></textarea>
+            </div>
+            <button type="submit" class="btn" id="testi-submit" style="width: fit-content; padding: 12px 32px;">Kirim
+              Testimoni</button>
+            <div id="testi-status" class="form-status" style="font-size: 14px; margin-top: 8px;"></div>
+          </form>
         </div>
       </div>
     </section>

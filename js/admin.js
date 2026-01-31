@@ -17,6 +17,11 @@ const saveOrderBtn = document.getElementById("save-order-btn");
 const testiListAdmin = document.getElementById("testi-list-admin");
 const testiStatusAdmin = document.getElementById("testi-status-admin");
 const bulkCompressBtn = document.getElementById("bulk-compress-btn");
+const slotStatusSelect = document.getElementById("slot-status");
+const slotFilledInput = document.getElementById("slot-filled");
+const slotTotalInput = document.getElementById("slot-total");
+const saveSlotsBtn = document.getElementById("save-slots-btn");
+const slotStatusMsg = document.getElementById("slot-status-msg");
 
 const BUCKET_NAME = "portfolio";
 const MAX_UPLOAD_SIZE = 10 * 1024 * 1024; // Batas upload awal (10MB)
@@ -196,7 +201,10 @@ const fetchTestimonialsAdmin = async () => {
     const info = document.createElement("div");
     info.className = "admin-info";
     info.innerHTML = `
-      <div class="admin-title">${item.name} <small class="muted">(${item.role || "-"})</small></div>
+      <div class="admin-title">${item.name} 
+        <small class="muted">(${item.role || "-"})</small>
+        <span class="kicker" style="font-size: 10px; padding: 2px 6px; border: 1px solid var(--line); border-radius: 4px; margin-left: 8px;">${item.brand || "akugambar"}</span>
+      </div>
       <div class="admin-meta" style="font-size: 14px; margin-top: 4px; color: var(--text); font-style: italic;">"${item.content}"</div>
     `;
 
@@ -247,13 +255,28 @@ const fetchAnalytics = async () => {
   }, {});
   const topPage = Object.entries(pageCounts).sort((a, b) => b[1] - a[1])[0];
   if (topPage) {
-    const pageName = topPage[0].replace(".html", "").replace("/", "") || "Home";
-    document.getElementById("stat-top-page").textContent = pageName.charAt(0).toUpperCase() + pageName.slice(1);
+    let pageName = topPage[0];
+    if (pageName === "/" || pageName === "/index.html") {
+      pageName = "Home (akujualan)";
+    } else if (pageName.includes("/akugambar/")) {
+      pageName = pageName.replace("/akugambar/", "akugambar/").replace(".html", "").replace("index", "Home");
+    } else {
+      pageName = pageName.replace("/", "").replace(".html", "");
+    }
+    document.getElementById("stat-top-page").textContent = pageName;
   }
 
   // Top referrer
   const refCounts = data.reduce((acc, curr) => {
-    const ref = curr.referrer === "Direct" ? "Direct" : new URL(curr.referrer).hostname;
+    let ref = curr.referrer || "Direct";
+    if (ref !== "Direct") {
+      try {
+        ref = new URL(ref).hostname;
+      } catch (e) {
+        // Not a valid absolute URL, keep as is or truncate
+        if (ref.length > 30) ref = ref.substring(0, 27) + "...";
+      }
+    }
     acc[ref] = (acc[ref] || 0) + 1;
     return acc;
   }, {});
@@ -262,6 +285,46 @@ const fetchAnalytics = async () => {
     document.getElementById("stat-top-referrer").textContent = topRef[0];
   }
 };
+
+const fetchSlotsAdmin = async () => {
+  if (!slotStatusSelect) return;
+  const { data, error } = await window.supabaseClient
+    .from("site_settings")
+    .select("value")
+    .eq("key", "akujualan_slots")
+    .single();
+
+  if (error || !data) return;
+  const { total, filled, status } = data.value;
+  slotStatusSelect.value = status || "open";
+  slotFilledInput.value = filled || 0;
+  slotTotalInput.value = total || 5;
+};
+
+if (saveSlotsBtn) {
+  saveSlotsBtn.addEventListener("click", async () => {
+    if (!ensureConfigured()) return;
+    saveSlotsBtn.disabled = true;
+    showStatus(slotStatusMsg, "Menyimpan...");
+
+    const payload = {
+      total: parseInt(slotTotalInput.value),
+      filled: parseInt(slotFilledInput.value),
+      status: slotStatusSelect.value
+    };
+
+    const { error } = await window.supabaseClient
+      .from("site_settings")
+      .upsert({ key: "akujualan_slots", value: payload });
+
+    if (error) {
+      showStatus(slotStatusMsg, error.message, true);
+    } else {
+      showStatus(slotStatusMsg, "Slot berhasil diperbarui.");
+    }
+    saveSlotsBtn.disabled = false;
+  });
+}
 
 loginForm.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -398,6 +461,7 @@ if (ensureConfigured()) {
       fetchItems();
       fetchTestimonialsAdmin();
       fetchAnalytics();
+      fetchSlotsAdmin();
     }
   });
 }

@@ -181,6 +181,47 @@ const loadAkujualanPortfolio = async () => {
     filterItems("all");
 
     if (window.initReveal) window.initReveal();
+    loadSlotStatus();
+};
+
+const loadSlotStatus = async () => {
+    const slotTarget = document.getElementById("slot-indicator");
+    if (!slotTarget || !window.supabaseClient) return;
+
+    const { data, error } = await window.supabaseClient
+        .from("site_settings")
+        .select("value")
+        .eq("key", "akujualan_slots")
+        .single();
+
+    if (error || !data) return;
+
+    const { total, filled, status } = data.value;
+    const remains = total - filled;
+
+    let html = "";
+    if (status === "closed") {
+        html = `<span style="display:inline-flex; align-items:center; gap:8px; background:rgba(138, 126, 114, 0.1); color:var(--muted); padding:6px 16px; border-radius:99px; font-size:12px; font-weight:700;">
+            <span style="width:8px; height:8px; background:var(--muted); border-radius:50%;"></span> ORDER DITUTUP SEMENTARA
+        </span>`;
+    } else if (remains <= 0) {
+        html = `<span style="display:inline-flex; align-items:center; gap:8px; background:rgba(45, 36, 30, 0.05); color:var(--text); padding:6px 16px; border-radius:99px; font-size:12px; font-weight:700;">
+            <span style="width:8px; height:8px; background:var(--accent); border-radius:50%;"></span> SLOT PENUH MINGGU INI
+        </span>`;
+    } else {
+        const perc = (filled / total) * 100;
+        html = `
+        <div style="display:inline-flex; flex-direction:column; align-items:center; gap:10px;">
+            <span style="display:inline-flex; align-items:center; gap:8px; background:rgba(166, 139, 124, 0.1); color:var(--accent); padding:6px 16px; border-radius:99px; font-size:12px; font-weight:800; letter-spacing:0.5px; border:1px solid rgba(166,139,124,0.2);">
+                <span style="width:8px; height:8px; background:var(--accent); border-radius:50%; box-shadow:0 0 10px var(--accent);"></span> SLOT TERSEDIA: ${remains} / ${total}
+            </span>
+            <div style="width:140px; height:4px; background:var(--line); border-radius:99px; overflow:hidden;">
+                <div style="width:${perc}%; height:100%; background:var(--accent); transition: width 1s ease-out;"></div>
+            </div>
+        </div>`;
+    }
+
+    slotTarget.innerHTML = html;
 };
 
 const checkSupabase = setInterval(() => {

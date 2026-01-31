@@ -171,21 +171,30 @@ const testimonialStatus = document.getElementById("testi-status");
 const loadTestimonials = async () => {
   if (!window.supabaseClient || !testimonialContainer) return;
 
+  const currentBrand = window.location.pathname.includes("akugambar") ? "akugambar" : "akujualan";
+
   const { data, error } = await window.supabaseClient
     .from("testimonials")
     .select("*")
     .eq("is_approved", true)
+    .eq("brand", currentBrand)
     .order("created_at", { ascending: false })
     .limit(6);
 
   if (error || !data || data.length === 0) {
-    // If no data or error, show dummy data
-    const dummy = [
+    // Brand-specific dummy data
+    const dummyAkugambar = [
       { name: "Andi Wijaya", role: "Owner Coffee Shop", content: "Hasil desainnya sangat memuaskan dan minimalis sesuai dengan keinginan saya. Proses pengerjaannya juga sangat profesional." },
       { name: "Sari Pertiwi", role: "Fashion Blogger", content: "Logo yang dibuat benar-benar mewakili karakter brand saya. Komunikasi selama proses desain sangat lancar." },
       { name: "Budi Santoso", role: "Startup Founder", content: "Cepat, rapi, dan hasilnya sangat estetik. Sangat direkomendasikan untuk yang mencari desain dengan sentuhan modern." }
     ];
-    renderTestimonials(dummy);
+    const dummyAkujualan = [
+      { name: "Rina Kusuma", role: "Ibu Rumah Tangga", content: "Tas rajutnya rapi sekali dan warnanya persis seperti yang saya mau. Benangnya juga lembut, sangat puas!" },
+      { name: "Deni Pratama", role: "Kolektor Amigurumi", content: "Boneka rajut (amigurumi) buatannya sangat detail dan lucu. Cocok banget buat kado spesial." },
+      { name: "Maya Sari", role: "Interior Stylist", content: "Coaster dan dekorasi rajutannya memberikan sentuhan hangat di ruangan. Kualitas hand-crafted yang luar biasa." }
+    ];
+
+    renderTestimonials(currentBrand === "akugambar" ? dummyAkugambar : dummyAkujualan);
     return;
   }
 
@@ -219,6 +228,7 @@ if (testimonialForm) {
       return;
     }
 
+    const currentBrand = window.location.pathname.includes("akugambar") ? "akugambar" : "akujualan";
     const submitBtn = document.getElementById("testi-submit");
     const name = document.getElementById("testi-name").value.trim();
     const role = document.getElementById("testi-role").value.trim();
@@ -230,7 +240,7 @@ if (testimonialForm) {
 
     const { error } = await window.supabaseClient
       .from("testimonials")
-      .insert([{ name, role, content, is_approved: true }]); // Langsung approved agar pengunjung senang
+      .insert([{ name, role, content, brand: currentBrand, is_approved: true }]);
 
     if (error) {
       testimonialStatus.textContent = "Gagal mengirim: " + error.message;
@@ -238,7 +248,7 @@ if (testimonialForm) {
     } else {
       testimonialStatus.textContent = "Terima kasih! Testimoni Anda telah ditambahkan.";
       testimonialForm.reset();
-      loadTestimonials(); // Refresh
+      loadTestimonials();
     }
     submitBtn.disabled = false;
   });
