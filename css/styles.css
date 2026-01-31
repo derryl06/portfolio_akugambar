@@ -188,6 +188,45 @@ header {
   color: var(--text);
   text-decoration: none;
   display: inline-block;
+  white-space: nowrap;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.main-nav a {
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+  transition: all 0.2s ease;
+}
+
+.main-nav a:hover {
+  color: var(--text);
+}
+
+.main-nav a.nav-accent {
+  background: var(--accent);
+  color: #fff;
+  padding: 6px 16px;
+  border-radius: 99px;
+  font-size: 13px;
+}
+
+.main-nav a.nav-accent:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(166, 139, 124, 0.2);
+  filter: brightness(1.1);
+}
+
+@media (max-width: 600px) {
+  .main-nav a:not(.nav-accent) {
+    display: none;
+  }
 }
 
 .theme-toggle {

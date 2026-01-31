@@ -266,5 +266,11 @@ if (mainElement) {
   observeMutation.observe(mainElement, { childList: true, subtree: true });
 }
 
+document.addEventListener("keydown", (e) => {
+  if (e.shiftKey && e.key === "A") {
+    window.location.href = "admin.html";
+  }
+});
+
 document.addEventListener("DOMContentLoaded", initReveal);
 initReveal();

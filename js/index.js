@@ -311,5 +311,12 @@ if (heroImage) {
   });
 }
 
+document.addEventListener("keydown", (e) => {
+  if (e.shiftKey && e.key === "A") {
+    const isAdminPath = window.location.pathname.includes("/akujualan/");
+    window.location.href = isAdminPath ? "../admin.html" : "admin.html";
+  }
+});
+
 document.addEventListener("DOMContentLoaded", initReveal);
 initReveal(); // Run once immediately
