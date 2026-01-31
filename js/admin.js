@@ -22,6 +22,9 @@ const slotFilledInput = document.getElementById("slot-filled");
 const slotTotalInput = document.getElementById("slot-total");
 const saveSlotsBtn = document.getElementById("save-slots-btn");
 const slotStatusMsg = document.getElementById("slot-status-msg");
+const craftInput = document.getElementById("todays-craft-input");
+const saveCraftBtn = document.getElementById("save-craft-btn");
+const craftStatusMsg = document.getElementById("craft-status-msg");
 
 const BUCKET_NAME = "portfolio";
 const MAX_UPLOAD_SIZE = 10 * 1024 * 1024; // Batas upload awal (10MB)
@@ -326,6 +329,39 @@ if (saveSlotsBtn) {
   });
 }
 
+const fetchCraftAdmin = async () => {
+  if (!craftInput) return;
+  const { data, error } = await window.supabaseClient
+    .from("site_settings")
+    .select("value")
+    .eq("key", "todays_craft")
+    .single();
+
+  if (error || !data) return;
+  craftInput.value = data.value.text || "";
+};
+
+if (saveCraftBtn) {
+  saveCraftBtn.addEventListener("click", async () => {
+    if (!ensureConfigured()) return;
+    saveCraftBtn.disabled = true;
+    showStatus(craftStatusMsg, "Menyimpan...");
+
+    const payload = { text: craftInput.value.trim() };
+
+    const { error } = await window.supabaseClient
+      .from("site_settings")
+      .upsert({ key: "todays_craft", value: payload });
+
+    if (error) {
+      showStatus(craftStatusMsg, error.message, true);
+    } else {
+      showStatus(craftStatusMsg, "Status pengerjaan diperbarui.");
+    }
+    saveCraftBtn.disabled = false;
+  });
+}
+
 loginForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   if (!ensureConfigured()) return;
@@ -462,6 +498,7 @@ if (ensureConfigured()) {
       fetchTestimonialsAdmin();
       fetchAnalytics();
       fetchSlotsAdmin();
+      fetchCraftAdmin();
     }
   });
 }

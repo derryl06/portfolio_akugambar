@@ -166,6 +166,23 @@
               <div id="slot-status-msg" class="form-status" style="margin-top: 12px; font-size: 13px;"></div>
             </div>
 
+            <!-- Today's Craft Section -->
+            <div
+              style="margin-top: 24px; background: rgba(var(--text-rgb), 0.03); padding: 24px; border-radius: 20px; border: 1px solid var(--line);">
+              <div class="admin-header">
+                <div>
+                  <div class="headline" style="font-size: 20px;">Today's Craft Status</div>
+                  <p class="muted">Tampilkan apa yang sedang Anda kerjakan hari ini di website.</p>
+                </div>
+              </div>
+              <div style="margin-top: 16px; display: flex; gap: 12px;">
+                <input type="text" id="todays-craft-input" placeholder="Contoh: Merajut tas pesanan Jakarta... 🧶"
+                  style="flex: 1; padding: 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg);">
+                <button id="save-craft-btn" class="btn" style="padding: 12px 24px;">Update Status</button>
+              </div>
+              <div id="craft-status-msg" class="form-status" style="margin-top: 12px; font-size: 13px;"></div>
+            </div>
+
             <div style="margin-top: 40px;">
               <div class="kicker">akujualan.co (Rajut)</div>
               <div class="admin-list" id="item-list-akujualan"></div>

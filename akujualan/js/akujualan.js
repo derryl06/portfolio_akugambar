@@ -182,6 +182,24 @@ const loadAkujualanPortfolio = async () => {
 
     if (window.initReveal) window.initReveal();
     loadSlotStatus();
+    loadTodaysCraft();
+};
+
+const loadTodaysCraft = async () => {
+    const container = document.getElementById("todays-craft-container");
+    const textField = document.getElementById("todays-craft-text");
+    if (!container || !textField || !window.supabaseClient) return;
+
+    const { data, error } = await window.supabaseClient
+        .from("site_settings")
+        .select("value")
+        .eq("key", "todays_craft")
+        .single();
+
+    if (error || !data || !data.value.text) return;
+
+    textField.textContent = data.value.text;
+    container.style.display = "block";
 };
 
 const loadSlotStatus = async () => {

@@ -212,9 +212,12 @@ header {
 .main-nav a.nav-accent {
   background: var(--accent);
   color: #fff;
-  padding: 6px 16px;
+  padding: 4px 12px;
   border-radius: 99px;
-  font-size: 13px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .main-nav a.nav-accent:hover {
@@ -1413,9 +1416,204 @@ body[data-theme="dark"] .faq-question:hover {
   visibility: visible;
 }
 
-.back-to-top:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+/* Social Sidebar (Desktop) */
+.social-sidebar {
+  position: fixed;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 2000;
+}
+
+.sidebar-link {
+  width: 44px;
+  height: 44px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--text);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-link:hover {
+  transform: scale(1.1) translateX(6px);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.sidebar-link::after {
+  content: attr(data-label);
+  position: absolute;
+  left: 56px;
+  background: var(--text);
+  color: var(--bg);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.sidebar-link:hover::after {
+  opacity: 1;
+  transform: translateX(6px);
+}
+
+body[data-theme="dark"] .sidebar-link {
+  background: var(--card);
+}
+
+/* Social FAB System (Mobile) */
+.social-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 2000;
+  display: none;
+  /* Hidden on desktop by default */
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 12px;
+}
+
+@media (max-width: 900px) {
+  .social-sidebar {
+    display: none;
+  }
+
+  .social-fab {
+    display: flex;
+  }
+
+  .back-to-top {
+    left: 20px;
+  }
+}
+
+.fab-main {
+  width: 56px;
+  height: 56px;
+  background: var(--text);
+  color: var(--bg);
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 2;
+}
+
+.social-fab.is-active .fab-main {
+  transform: rotate(135deg);
+  background: var(--accent);
+}
+
+.fab-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 1;
+}
+
+.social-fab.is-active .fab-list {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.fab-item {
+  width: 48px;
+  height: 48px;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 18px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.fab-item:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  transform: scale(1.1);
+}
+
+.fab-item::after {
+  content: attr(data-label);
+  position: absolute;
+  right: 64px;
+  background: var(--text);
+  color: var(--bg);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.fab-item:hover::after {
+  opacity: 1;
+  transform: translateX(-8px);
+}
+
+body[data-theme="dark"] .fab-item {
+  background: #231e1b;
+}
+
+body[data-theme="dark"] .fab-item::after {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Move Back to Top when FAB is present on mobile */
+.back-to-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+}
+
+@media (min-width: 901px) {
+  .back-to-top {
+    right: 24px;
+    left: auto;
+  }
+}
+
+@media (max-width: 900px) {
+  .back-to-top {
+    left: 20px;
+    right: auto;
+    bottom: 20px;
+  }
 }
 
 /* Reveal on scroll animations */
