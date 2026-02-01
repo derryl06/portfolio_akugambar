@@ -64,7 +64,6 @@
     rel="stylesheet" />
   <link rel="preload" href="assets/akujualan-hero-new.png" as="image" />
   <link rel="stylesheet" href="css/styles.css" />
-  <link rel="stylesheet" href="css/jar.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="akujualan/css/style.css">
   <link rel="manifest" href="manifest.json" />
@@ -366,27 +365,9 @@
             <div class="headline">Apa Kata Pelanggan</div>
           </div>
         </div>
-        <div class="testimonial-jar-container" id="testimonial-container"
-          style="display: flex; justify-content: center; width: 100%;">
-          <div class="the-jar">
-            <div class="jar-lid"></div>
-            <div class="jar-notes-container" id="jar-notes">
-              <!-- Notes will be injected here by JS -->
-            </div>
-          </div>
-        </div>
-
-        <!-- Testimonial Modal -->
-        <div id="testi-modal" class="testi-modal">
-          <div class="testi-modal-overlay"></div>
-          <div class="testi-modal-content">
-            <button class="testi-modal-close">✕</button>
-            <p class="testi-modal-text"></p>
-            <div class="testi-modal-author">
-              <strong></strong>
-              <span></span>
-            </div>
-          </div>
+        <div class="testimonial-grid reveal-stagger" id="testimonial-container">
+          <!-- Dynamic testimonials will load here -->
+          <div class="muted">Memuat testimoni...</div>
         </div>
 
         <div class="testimonial-form-card reveal">
@@ -512,7 +493,6 @@
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/config.js"></script>
   <script defer src="js/supabase.js"></script>
-  <script defer src="js/jar.js"></script>
   <script defer src="js/index.js"></script>
   <script defer src="akujualan/js/akujualan.js"></script>
   <script defer src="js/analytics.js"></script>

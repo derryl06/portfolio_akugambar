@@ -205,11 +205,6 @@ const loadTestimonials = async () => {
 };
 
 const renderTestimonials = (list) => {
-  if (window.renderTestimonialsOverride) {
-    window.renderTestimonialsOverride(list);
-    return;
-  }
-
   if (!testimonialContainer) return;
 
   testimonialContainer.innerHTML = "";
