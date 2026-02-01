@@ -41,6 +41,18 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Dynamic Island Logic for Today's Craft
+    const craftBadge = document.getElementById("todays-craft-container");
+    if (craftBadge) {
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 200) {
+                craftBadge.classList.add("is-island");
+            } else {
+                craftBadge.classList.remove("is-island");
+            }
+        });
+    }
+
     // Dynamic Ambient Logic
     const initDynamicAmbient = () => {
         const now = new Date();
