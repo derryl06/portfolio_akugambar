@@ -41,6 +41,18 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Compact Mode Logic for Today's Craft
+    const craftBadge = document.getElementById("todays-craft-container");
+    if (craftBadge) {
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 200) {
+                craftBadge.classList.add("is-compact");
+            } else {
+                craftBadge.classList.remove("is-compact");
+            }
+        });
+    }
+
     // Dynamic Ambient Logic
     const initDynamicAmbient = () => {
         const now = new Date();
@@ -79,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
             navigator.serviceWorker
-                .register("/sw.js")
+                .register("./sw.js") // Use relative path for GitHub Pages compatibility
                 .then((reg) => console.log("SW Registered"))
                 .catch((err) => console.log("SW Failed", err));
         });

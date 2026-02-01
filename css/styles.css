@@ -1431,20 +1431,27 @@ body[data-theme="dark"] .faq-question:hover {
 /* Minimalist Live Status (Pulsing Dot Only) */
 .todays-craft-badge {
   position: fixed;
-  bottom: 30px;
-  left: 30px;
+  bottom: 24px;
+  left: 24px;
   z-index: 3000;
   display: none;
   /* Shown via JS */
+  transition: all 0.6s cubic-bezier(0.2, 1, 0.3, 1);
   pointer-events: auto;
 }
 
 .todays-craft-inner {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  padding: 12px 18px;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
   display: flex;
   align-items: center;
   gap: 12px;
-  cursor: help;
-  position: relative;
+  pointer-events: auto;
+  transition: all 0.6s cubic-bezier(0.2, 1, 0.3, 1);
+  overflow: hidden;
 }
 
 .status-dot-wrapper {
@@ -1471,44 +1478,43 @@ body[data-theme="dark"] .faq-question:hover {
 
 /* Tooltip Styling */
 .status-content {
-  position: absolute;
-  bottom: calc(100% + 12px);
-  left: 0;
-  background: var(--bg);
-  border: 1px solid var(--line);
-  padding: 10px 16px;
-  border-radius: 14px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  width: max-content;
-  max-width: 220px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.5s ease;
+}
+
+/* Compact State (Green Dot Only) */
+.todays-craft-badge.is-compact {
+  bottom: 24px;
+}
+
+.todays-craft-badge.is-compact .todays-craft-inner {
+  padding: 12px;
+  border-radius: 99px;
+  gap: 0;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.todays-craft-badge.is-compact .status-content {
+  max-width: 0;
   opacity: 0;
-  visibility: hidden;
-  transform: translateY(10px);
-  transition: all 0.3s cubic-bezier(0.2, 1, 0.3, 1);
+  margin-left: 0;
+  pointer-events: none;
 }
 
-.todays-craft-badge:hover .status-content {
+/* Hover to Reveal when Compact */
+.todays-craft-badge.is-compact:hover .todays-craft-inner {
+  padding: 12px 18px;
+  gap: 12px;
+  border-radius: 20px;
+}
+
+.todays-craft-badge.is-compact:hover .status-content {
+  max-width: 300px;
   opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
 }
 
-.status-kicker {
-  font-size: 9px;
-  font-weight: 800;
-  opacity: 0.6;
-  margin-bottom: 2px;
-  letter-spacing: 1px;
-}
-
-.status-text {
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 1.4;
-  color: var(--text);
-}
-
-body[data-theme="dark"] .status-content {
+body[data-theme="dark"] .todays-craft-inner {
   background: var(--card);
 }
 
