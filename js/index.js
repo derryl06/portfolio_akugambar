@@ -165,6 +165,9 @@ const incrementViews = async (id) => {
 };
 
 const testimonialContainer = document.getElementById("testimonial-container");
+if (testimonialContainer) {
+  testimonialContainer.innerHTML = ""; // Prepare it
+}
 const testimonialForm = document.getElementById("testimonial-form");
 const testimonialStatus = document.getElementById("testi-status");
 
@@ -206,6 +209,8 @@ const renderTestimonials = (list) => {
     window.renderTestimonialsOverride(list);
     return;
   }
+
+  if (!testimonialContainer) return;
 
   testimonialContainer.innerHTML = "";
   list.forEach(item => {
