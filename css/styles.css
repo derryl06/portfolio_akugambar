@@ -1418,7 +1418,7 @@ body[data-theme="dark"] .faq-question:hover {
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 1000;
+  z-index: 2500;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
@@ -1616,6 +1616,12 @@ body[data-theme="dark"] .sidebar-link {
   flex-direction: column-reverse;
   align-items: center;
   gap: 12px;
+  pointer-events: none;
+}
+
+.fab-main,
+.fab-item {
+  pointer-events: auto;
 }
 
 @media (max-width: 900px) {
