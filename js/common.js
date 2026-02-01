@@ -96,4 +96,21 @@ document.addEventListener("DOMContentLoaded", () => {
                 .catch((err) => console.log("SW Failed", err));
         });
     }
+
+    // "Don't Leave Me!" Tab Attention Logic
+    const originalTitle = document.title;
+    document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+            const messages = [
+                "Lagi liat apa nih? 🧶",
+                "Karya kita masih nunggu! 🎨",
+                "Balik lagi yuk ✨",
+                "Jangan lupa mampir lagi 🚀"
+            ];
+            const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+            document.title = randomMsg;
+        } else {
+            document.title = originalTitle;
+        }
+    });
 });

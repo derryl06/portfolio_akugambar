@@ -1,15 +1,15 @@
 /**
- * effects.js - Custom visual effects for akugambar.co
- * Includes: Custom Cursor, Magnetic Buttons, and smooth interaction logic.
+ * effects.js - Custom visual effects for akugambar.co & akujualan.co
+ * Includes: Custom Cursor, Magnetic Buttons, and The Cursor Weave (Yarn Trail).
  */
 
 document.addEventListener("DOMContentLoaded", () => {
     initCursor();
+    initWeave();
 });
 
 /**
  * Aesthetic Custom Cursor Logic
- * A sophisticated ring + dot cursor with smooth trailing and contextual feedback.
  */
 function initCursor() {
     const cursor = document.createElement("div");
@@ -38,7 +38,6 @@ function initCursor() {
     });
 
     function animate() {
-        // Smooth lerping
         dotX += (mouseX - dotX) * 0.25;
         dotY += (mouseY - dotY) * 0.25;
         ringX += (mouseX - ringX) * 0.12;
@@ -51,12 +50,10 @@ function initCursor() {
     }
     animate();
 
-    // Interaction feedbacks
     const handleMouseEnter = (e) => {
         const el = e.currentTarget;
         document.body.classList.add("cursor-active");
-
-        if (el.classList.contains("work-card") || el.classList.contains("portfolio-card")) {
+        if (el.classList.contains("work-card") || el.classList.contains("portfolio-card") || el.classList.contains("bundle-card")) {
             document.body.classList.add("cursor-view-mode");
         }
     };
@@ -66,7 +63,7 @@ function initCursor() {
     };
 
     const refreshListeners = () => {
-        const interactables = document.querySelectorAll("a, button, .work-card, .portfolio-card, .chip, .faq-question");
+        const interactables = document.querySelectorAll("a, button, .work-card, .portfolio-card, .bundle-card, .chip, .faq-question");
         interactables.forEach((el) => {
             el.removeEventListener("mouseenter", handleMouseEnter);
             el.removeEventListener("mouseleave", handleMouseLeave);
@@ -76,9 +73,90 @@ function initCursor() {
     };
 
     refreshListeners();
-
-    // Handle dynamic content
     const observer = new MutationObserver(refreshListeners);
     const main = document.querySelector('main');
     if (main) observer.observe(main, { childList: true, subtree: true });
+}
+
+/**
+ * The Cursor Weave - A yarn thread that follows the mouse with elastic physics.
+ */
+function initWeave() {
+    const canvas = document.createElement('canvas');
+    canvas.id = 'weaveCanvas';
+    canvas.className = 'weave-canvas';
+    document.body.appendChild(canvas);
+
+    const ctx = canvas.getContext('2d');
+    let width, height;
+
+    const resize = () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    };
+    window.addEventListener('resize', resize);
+    resize();
+
+    const mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    const points = [];
+    const numPoints = 25; // Length of the yarn
+
+    for (let i = 0; i < numPoints; i++) {
+        points.push({ x: mouse.x, y: mouse.y });
+    }
+
+    window.addEventListener('mousemove', (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+    });
+
+    function draw() {
+        ctx.clearRect(0, 0, width, height);
+
+        // Physics logic: First point follows mouse, others follow previous
+        points[0].x += (mouse.x - points[0].x) * 0.3;
+        points[0].y += (mouse.y - points[0].y) * 0.3;
+
+        for (let i = 1; i < numPoints; i++) {
+            const p = points[i];
+            const prev = points[i - 1];
+
+            // Add a little bit of "floaty" gravity/wave effect
+            const wave = Math.sin(Date.now() * 0.002 + i * 0.3) * 1.2;
+
+            p.x += (prev.x - p.x) * 0.35 + wave * 0.2;
+            p.y += (prev.y - p.y) * 0.35 + Math.cos(Date.now() * 0.002 + i * 0.3) * 1.2;
+        }
+
+        // Draw the yarn
+        const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#e63946';
+
+        ctx.shadowBlur = 4;
+        ctx.shadowColor = accentColor;
+        ctx.strokeStyle = accentColor;
+        ctx.lineWidth = 1.8;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, points[0].y);
+
+        for (let i = 1; i < numPoints - 2; i++) {
+            const xc = (points[i].x + points[i + 1].x) / 2;
+            const yc = (points[i].y + points[i + 1].y) / 2;
+            ctx.quadraticCurveTo(points[i].x, points[i].y, xc, yc);
+        }
+
+        ctx.quadraticCurveTo(
+            points[numPoints - 2].x,
+            points[numPoints - 2].y,
+            points[numPoints - 1].x,
+            points[numPoints - 1].y
+        );
+
+        ctx.stroke();
+
+        requestAnimationFrame(draw);
+    }
+    draw();
 }

@@ -202,6 +202,11 @@ const loadTestimonials = async () => {
 };
 
 const renderTestimonials = (list) => {
+  if (window.renderTestimonialsOverride) {
+    window.renderTestimonialsOverride(list);
+    return;
+  }
+
   testimonialContainer.innerHTML = "";
   list.forEach(item => {
     const card = document.createElement("div");
