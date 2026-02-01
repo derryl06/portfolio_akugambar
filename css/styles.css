@@ -1489,34 +1489,57 @@ body[data-theme="dark"] .faq-question:hover {
   color: var(--text);
 }
 
-/* Dynamic Island State (Mobile Only) */
-@media (max-width: 900px) {
-  .todays-craft-badge.is-island {
-    bottom: auto;
-    top: 16px;
-    left: 50%;
-    transform: translateX(-50%);
-    max-width: 400px;
-    width: 90%;
-  }
+.status-content {
+  display: flex;
+  flex-direction: column;
+  transition: all 0.5s ease;
+  overflow: hidden;
+}
 
-  .todays-craft-badge.is-island .todays-craft-inner {
-    background: rgba(18, 20, 24, 0.85);
-    /* Darker glass effect */
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 8px 24px;
-    border-radius: 99px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-  }
+/* Shrunk State (Green Dot) */
+.todays-craft-badge.is-island {
+  max-width: 60px;
+}
 
-  .todays-craft-badge.is-island .status-text {
-    color: #fff;
-    font-size: 12px;
-  }
+.todays-craft-badge.is-island .todays-craft-inner {
+  padding: 12px;
+  border-radius: 99px;
+  gap: 0;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
 
-  .todays-craft-badge.is-island .status-kicker {
-    color: rgba(255, 255, 255, 0.5);
+.todays-craft-badge.is-island .status-content {
+  max-width: 0;
+  opacity: 0;
+  margin-left: 0;
+}
+
+/* Expand on Hover when shrunk */
+.todays-craft-badge.is-island:hover {
+  max-width: 300px;
+}
+
+.todays-craft-badge.is-island:hover .todays-craft-inner {
+  padding: 12px 18px;
+  gap: 12px;
+  background: var(--bg);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+.todays-craft-badge.is-island:hover .status-content {
+  max-width: 250px;
+  opacity: 1;
+  margin-left: 0;
+}
+
+body[data-theme="dark"] .todays-craft-badge.is-island:hover .todays-craft-inner {
+  background: var(--card);
+}
+
+@media (max-width: 600px) {
+  .todays-craft-badge {
+    left: 16px;
+    bottom: 24px;
   }
 }
 
