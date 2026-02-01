@@ -1765,9 +1765,18 @@ body[data-theme="dark"] .fab-item::after {
 
 @media (max-width: 900px) {
   .back-to-top {
-    left: 20px;
-    right: auto;
-    bottom: 20px;
+    left: auto;
+    right: 24px;
+    bottom: 92px;
+    /* Positioned above the Social FAB */
+  }
+
+  /* Hide back-to-top when social menu is open to avoid overlap */
+  .social-fab.is-active~.back-to-top {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    pointer-events: none;
   }
 }
 
