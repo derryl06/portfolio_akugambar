@@ -513,6 +513,26 @@ body[data-theme="dark"] .price-item,
 body[data-theme="dark"] .faq-item,
 body[data-theme="dark"] .card {
     background: #231e1b;
+    border-color: var(--line);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+body[data-theme="dark"] .price-item:hover {
+    background: #2d2622;
+    border-color: var(--accent);
+}
+
+body[data-theme="dark"] .price-val {
+    color: var(--accent);
+}
+
+body[data-theme="dark"] .portfolio-card {
+    background: #231e1b;
+    border: 1px solid var(--line);
+}
+
+body[data-theme="dark"] .portfolio-card .portfolio-title {
+    color: var(--text);
 }
 
 /* Bundling Card Premium Styles (Desktop) */

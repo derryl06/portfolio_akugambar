@@ -2,8 +2,10 @@
   --bg: #ffffff;
   --text: #111111;
   --muted: #777777;
-  --card: #e5e5e5;
-  --line: #d0d0d0;
+  --card: #f9f9f9;
+  --line: #e8e8e8;
+  --accent: #a68b7c;
+  --accent-rgb: 166, 139, 124;
 }
 
 * {
@@ -67,41 +69,81 @@ body[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
 
 /* Theme toggle (light/dark) */
 body[data-theme="dark"] {
-  --bg: #121418;
-  /* Deep obsidian, not pitch black */
-  --text: #e1e1e1;
-  /* Off-white for better readability */
-  --muted: #8e949d;
-  --card: #1c1f26;
-  /* Slightly lighter than bg for hierarchy */
-  --line: #2d3139;
+  --bg: #110e0c;
+  /* Deep Espresso Tint */
+  --text: #f4eee7;
+  /* Warm Off-white */
+  --muted: #9c9187;
+  /* Warm Muted */
+  --card: #1c1815;
+  /* Lighter Warm Card */
+  --line: #2a241f;
+  /* Warm Border */
+  --accent: #a68b7c;
+  /* Pure Brand Accent */
+  --accent-rgb: 166, 139, 124;
 }
 
 body[data-theme="dark"] .social-list a {
-  background: #1f1f1f;
+  background: var(--card);
+  border-color: var(--line);
+  color: var(--text);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+body[data-theme="dark"] .social-list a:hover {
+  background: var(--line);
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 }
 
 body[data-theme="dark"] button {
-  color: #ffffff;
+  color: var(--text);
 }
 
 body[data-theme="dark"] .btn {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+body[data-theme="dark"] .btn:hover {
   background: transparent;
   border-color: #ffffff;
   color: #ffffff;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
 }
 
 body[data-theme="dark"] .btn-outline {
+  background: transparent;
+  border-color: var(--line);
+  color: var(--accent);
+}
+
+body[data-theme="dark"] .btn-outline:hover {
+  background: var(--accent);
   color: #ffffff;
+  border-color: var(--accent);
 }
 
 body[data-theme="dark"] .btn-danger {
-  border-color: #ff8b8b;
-  color: #ff8b8b;
+  border-color: #ff5e5e;
+  color: #ff5e5e;
+}
+
+body[data-theme="dark"] .btn-danger:hover {
+  background: #ff5e5e;
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(255, 94, 94, 0.3);
 }
 
 body[data-theme="dark"] .card {
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--line);
 }
 
 body[data-theme="dark"] .illus-face {
@@ -1425,6 +1467,20 @@ body[data-theme="dark"] .faq-question:hover {
 .back-to-top.is-visible {
   opacity: 1;
   visibility: visible;
+}
+
+body[data-theme="dark"] .back-to-top {
+  background: var(--card);
+  color: var(--accent);
+  border: 1px solid var(--line);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+body[data-theme="dark"] .back-to-top:hover {
+  background: var(--accent);
+  color: #ffffff;
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(166, 139, 124, 0.3);
 }
 
 /* Today's Craft Badge & Dynamic Island */
