@@ -1501,50 +1501,18 @@ body[data-theme="dark"] .faq-question:hover {
 
 /* Compact State (Only the Dot) */
 .todays-craft-badge.is-compact {
-  bottom: 6px;
+  bottom: 24px;
 }
 
 .todays-craft-badge.is-compact .todays-craft-inner {
-  background: rgba(0, 0, 0, 0);
-  /* Fade to transparent instead of transparent keyword */
+  background: transparent;
   border-color: transparent;
   box-shadow: none;
-  padding: 8px;
-  border-radius: 50%;
+  padding: 0;
 }
 
 .todays-craft-badge.is-compact .status-content {
-  max-width: 0;
-  opacity: 0;
-  white-space: nowrap;
-  pointer-events: none;
-  margin-left: 0;
-}
-
-/* Hover to Show Full Card even when Compact */
-.todays-craft-badge.is-compact:hover .todays-craft-inner {
-  background: var(--bg);
-  border: 1px solid var(--line);
-  padding: 12px 18px;
-  border-radius: 20px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-}
-
-.todays-craft-badge.is-compact:hover .status-content {
-  max-width: 250px;
-  opacity: 1;
-  margin-left: 12px;
-}
-
-body[data-theme="dark"] .todays-craft-inner {
-  background: var(--card);
-}
-
-@media (max-width: 600px) {
-  .todays-craft-badge {
-    left: 16px;
-    bottom: 24px;
-  }
+  display: none;
 }
 
 body[data-theme="dark"] .todays-craft-inner {
@@ -1570,8 +1538,8 @@ body[data-theme="dark"] .todays-craft-inner {
 
 @media (max-width: 600px) {
   .todays-craft-badge {
-    left: 20px;
-    bottom: 20px;
+    left: 16px;
+    bottom: 12px;
   }
 }
 
