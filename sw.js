@@ -1,12 +1,18 @@
 const CACHE_NAME = "akujualan-v1";
 const ASSETS_TO_CACHE = [
-    "./",
-    "./index.html",
-    "./css/styles.css",
-    "./js/common.js",
-    "./js/index.js",
-    "./assets/favicon.png",
-    "./assets/akujualan-hero-new.png"
+    "index.html",
+    "akugambar/index.html",
+    "akugambar/services.html",
+    "akugambar/portfolio.html",
+    "css/styles.css",
+    "akujualan/css/style.css",
+    "js/common.js",
+    "js/index.js",
+    "js/supabase.js",
+    "js/config.js",
+    "assets/favicon.png",
+    "assets/akujualan-hero-new.png",
+    "assets/head.png"
 ];
 
 // Install Service Worker

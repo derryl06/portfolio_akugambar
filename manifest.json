@@ -2,7 +2,7 @@
   "name": "akujualan.co — Custom Crochet & Design",
   "short_name": "akujualan",
   "description": "Jasa rajutan custom premium dan studio desain kreatif.",
-  "start_url": "/index.html",
+  "start_url": "index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#111111",
