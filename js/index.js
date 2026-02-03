@@ -66,6 +66,21 @@ const openLightbox = (images, index = 0, title = "", desc = "", price = "", kick
   }
 
   showLightboxImage();
+
+  // Update WhatsApp dynamic link
+  const waLink = lightbox.querySelector("#lightbox-wa-link");
+  if (waLink) {
+    const isAkugambar = window.location.pathname.includes("akugambar");
+    const brandName = isAkugambar ? "akugambar.co" : "akujualan.co";
+    const waNumber = isAkugambar ? "6282264330546" : "6285700804186";
+
+    const formattedPrice = price ? (price.toLowerCase().includes("rp") ? price : `Rp ${price}`) : "tanya harga";
+
+    const message = `Halo ${brandName}! 👋%0A%0ASaya tertarik dengan produk berikut:%0A📌 *${title}*%0A📂 Kategori: ${kicker || "-"}%0A💰 Harga: ${formattedPrice}%0A%0AApakah slot untuk pemesanan ini masih tersedia? Terima kasih! ✨`;
+
+    waLink.href = `https://wa.me/${waNumber}?text=${message}`;
+  }
+
   lightbox.classList.add("is-open");
   lightbox.setAttribute("aria-hidden", "false");
   document.body.classList.add("lightbox-active");

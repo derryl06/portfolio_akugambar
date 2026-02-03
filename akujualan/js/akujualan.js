@@ -107,7 +107,7 @@ const loadAkujualanPortfolio = async () => {
                         <h3 style="font-size: 20px; font-weight: 700; color: var(--text); line-height: 1.2;">${item.title}</h3>
                         <p style="font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 8px;">${item.description || "Hubungi kami untuk detail paket hemat ini."}</p>
                         <div style="display: flex; gap: 12px; margin-top: 8px;">
-                            <a href="https://wa.me/6285700804186?text=Halo%20akujualan.co%2C%20saya%20tertarik%20dengan%20paket%20${encodeURIComponent(item.title)}" class="btn btn-outline" style="flex: 1; text-align: center; text-decoration: none;" onclick="event.stopPropagation()">Pesan Paket</a>
+                            <a href="https://wa.me/6285700804186?text=Halo akujualan.co! 👋%0A%0ASaya tertarik dengan paket bundling:%0A🎁 *${item.title}*%0A💰 Harga: ${displayPrice || 'Tanya Harga'}%0A%0AApakah paket ini masih tersedia? Terima kasih! ✨" class="btn btn-outline" style="flex: 1; text-align: center; text-decoration: none;" onclick="event.stopPropagation()">Pesan Paket</a>
                         </div>
                     </div>
                 `;
