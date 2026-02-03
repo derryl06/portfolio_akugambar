@@ -140,7 +140,7 @@ const fetchItems = async () => {
     const info = document.createElement("div");
     info.className = "admin-info";
     info.innerHTML = `
-      <div class="admin-title">${item.title || "Untitled"} <small class="kicker" style="font-size: 10px; padding: 2px 6px; border: 1px solid var(--line); border-radius: 4px; margin-left: 8px;">${item.brand || "akugambar"}</small></div>
+      <div class="admin-title">${item.title || "Untitled"}</div>
       <div class="admin-meta">${item.category || "-"} ${item.price ? `• <strong>Rp ${item.price}</strong>` : ""}</div>
     `;
 
